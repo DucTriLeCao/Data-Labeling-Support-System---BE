@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DLSS/DLSS.iml" filepath="$PROJECT_DIR$/DLSS/DLSS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DLSS/.idea/Data Labeling Support System.iml" filepath="$PROJECT_DIR$/DLSS/.idea/Data Labeling Support System.iml" />
+    </modules>
+  </component>
+</project>
