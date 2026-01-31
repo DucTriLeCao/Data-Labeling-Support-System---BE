@@ -16,22 +16,31 @@ import java.util.List;
 public class Dataset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dataset_id", nullable = false)
-    private long datasetId;
-
-    @Column(name = "dataset_name", nullable = false, length = 100)
-    private String datasetName;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    @Column(name = "name", nullable = false, length = 200)
+    private String name;
+
+    @Column(name = "description", columnDefinition = "NVARCHAR(MAX)")
+    private String description;
+
+    @Column(name = "status", length = 20)
+    private String status = "active";
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     @OneToMany(mappedBy = "dataset")
-    private List<Image> images;
+    private List<DataItem> dataItems;
+
+    @OneToMany(mappedBy = "dataset")
+    private List<DatasetAssignment> datasetAssignments;
+
+    @OneToMany(mappedBy = "dataset")
+    private List<ExportJob> exportJobs;
 }

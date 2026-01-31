@@ -7,30 +7,28 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Table(name = "activity_logs")
+@Table(name = "project_members")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ActivityLog {
+public class ProjectMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "action", nullable = false, length = 100)
-    private String action;
+    @Column(name = "role_in_project", nullable = false, length = 50)
+    private String roleInProject;
 
-    @Column(name = "entity_type", length = 50)
-    private String entityType;
-
-    @Column(name = "entity_id")
-    private Long entityId;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "joined_at")
+    private LocalDateTime joinedAt;
 }
