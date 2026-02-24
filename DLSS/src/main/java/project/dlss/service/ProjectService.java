@@ -1,8 +1,7 @@
 package project.dlss.service;
 
-package service;
 
-import model.User;
+import entity.User;
 import repository.ProjectRepository;
 
 public interface ProjectService {
