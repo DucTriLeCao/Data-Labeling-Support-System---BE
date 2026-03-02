@@ -18,11 +18,11 @@ public class Review {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "annotation_id", nullable = false)
     private Annotation annotation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewer_id", nullable = false)
     private User reviewer;
 
@@ -37,7 +37,7 @@ public class Review {
     private LocalDateTime reviewedAt;
 
     public enum ReviewStatus {
-        approved,
-        rejected
+        APPROVED,
+        REJECTED
     }
 }

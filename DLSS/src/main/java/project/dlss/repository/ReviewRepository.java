@@ -1,4 +1,17 @@
 package project.dlss.repository;
 
-public interface ReviewRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import project.dlss.entity.Review;
+
+import java.util.List;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    List<Review> findByAnnotationId(Long annotationId);
+
+    List<Review> findByReviewerId(Long reviewerId);
+
+    List<Review> findByStatus(String status);
 }

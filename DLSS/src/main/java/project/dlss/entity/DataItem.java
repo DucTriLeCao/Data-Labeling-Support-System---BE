@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,23 +20,27 @@ public class DataItem {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dataset_id", nullable = false)
     private Dataset dataset;
 
     @Column(name = "content", nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String content;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20)
-    private String status = "new";
+    private DataItemStatus status;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "dataItem")
     private List<DataItemAssignment> dataItemAssignments;
 
-    @OneToMany(mappedBy = "dataItem")
+    @OneToMany(mappedBy = "dataItem",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Annotation> annotations;
 
     @OneToMany(mappedBy = "dataItem")
@@ -43,4 +48,12 @@ public class DataItem {
 
     @OneToMany(mappedBy = "dataItem")
     private List<ExportItem> exportItems;
+
+    public enum DataItemStatus {
+        NEW,
+        ASSIGNED,
+        ANNOTATED,
+        REVIEWED,
+        FINAL
+    }
 }

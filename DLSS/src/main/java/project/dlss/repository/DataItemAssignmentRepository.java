@@ -1,4 +1,18 @@
 package project.dlss.repository;
 
-public interface DataItemAssignmentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import project.dlss.entity.DataItemAssignment;
+
+import java.util.List;
+
+@Repository
+public interface DataItemAssignmentRepository
+        extends JpaRepository<DataItemAssignment, Long> {
+
+    List<DataItemAssignment> findByUserId(Long userId);
+
+    List<DataItemAssignment> findByDataItemId(Long dataItemId);
+
+    List<DataItemAssignment> findByStatus(String status);
 }
