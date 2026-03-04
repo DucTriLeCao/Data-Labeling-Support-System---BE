@@ -33,6 +33,9 @@ public class Annotation {
     @Column(name = "status", length = 20)
     private String status = "submitted";
 
+    @Column(name = "version")
+    private Integer version = 1;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -41,7 +44,4 @@ public class Annotation {
 
     @OneToMany(mappedBy = "annotation")
     private List<FinalResult> finalResults;
-
-    @OneToMany(mappedBy = "annotation")
-    private List<ExportItem> exportItems;
 }

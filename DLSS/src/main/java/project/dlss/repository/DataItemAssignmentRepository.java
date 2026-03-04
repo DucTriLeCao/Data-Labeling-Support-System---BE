@@ -10,9 +10,11 @@ import java.util.List;
 public interface DataItemAssignmentRepository
         extends JpaRepository<DataItemAssignment, Long> {
 
-    List<DataItemAssignment> findByUserId(Long userId);
+    List<DataItemAssignment> findByUser_IdOrderByAssignedAtDesc(Long userId);
 
-    List<DataItemAssignment> findByDataItemId(Long dataItemId);
+    List<DataItemAssignment> findByUser_IdAndStatus(Long userId, String status);
+
+    List<DataItemAssignment> findByDataItem_Id(Long dataItemId);
 
     List<DataItemAssignment> findByStatus(String status);
 }

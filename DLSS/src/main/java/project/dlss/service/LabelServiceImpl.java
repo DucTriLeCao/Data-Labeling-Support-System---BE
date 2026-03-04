@@ -19,7 +19,7 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public Label createLabel(Long projectId, String name, Long parentId) {
 
-        labelRepository.findByNameAndProjectId(name, projectId)
+        labelRepository.findByNameAndProject_Id(name, projectId)
                 .ifPresent(l -> {
                     throw new BadRequestException("Label already exists in project");
                 });
@@ -46,13 +46,13 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public List<Label> getLabelsByProject(Long projectId) {
-        return labelRepository.findByProjectId(projectId);
+        return labelRepository.findByProject_Id(projectId);
     }
 
     @Override
     public boolean validateLabel(Long projectId, String labelName) {
         return labelRepository
-                .findByNameAndProjectId(labelName, projectId)
+                .findByNameAndProject_Id(labelName, projectId)
                 .isPresent();
     }
 

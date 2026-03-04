@@ -8,4 +8,6 @@ public interface ReviewService {
                             Long reviewerId,
                             String status,
                             String comment);
+
+    Review updateReview(Long reviewId, String status, String comment);
 }

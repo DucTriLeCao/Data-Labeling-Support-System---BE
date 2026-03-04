@@ -3,6 +3,7 @@ package project.dlss.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.dlss.dto.TaskResponse;
 import project.dlss.entity.DataItem;
 import project.dlss.entity.DataItemAssignment;
 import project.dlss.entity.User;
@@ -11,6 +12,8 @@ import project.dlss.repository.DataItemRepository;
 import project.dlss.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +60,28 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
             assignment.setStatus(status);
         }
         assignmentRepository.save(assignment);
+    }
+
+    @Override
+    public List<TaskResponse> getMyTasks(Long userId) {
+        List<DataItemAssignment> assignments =
+                assignmentRepository.findByUser_IdOrderByAssignedAtDesc(userId);
+
+        return assignments.stream()
+                .map(a -> {
+                    DataItem item = a.getDataItem();
+                    return TaskResponse.builder()
+                            .assignmentId(a.getId())
+                            .dataItemId(item.getId())
+                            .content(item.getContent())
+                            .status(a.getStatus())
+                            .assignedAt(a.getAssignedAt())
+                            .datasetId(item.getDataset().getId())
+                            .datasetName(item.getDataset().getName())
+                            .projectId(item.getDataset().getProject().getId())
+                            .projectName(item.getDataset().getProject().getName())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }

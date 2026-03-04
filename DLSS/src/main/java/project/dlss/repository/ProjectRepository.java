@@ -2,8 +2,8 @@ package project.dlss.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import project.dlss.entity.ActivityLog;
+import project.dlss.entity.Project;
 
 @Repository
-public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 }

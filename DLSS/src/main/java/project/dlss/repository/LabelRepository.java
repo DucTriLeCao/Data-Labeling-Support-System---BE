@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface LabelRepository extends JpaRepository<Label, Long> {
 
-    List<Label> findByProjectId(Long projectId);
+    List<Label> findByProject_Id(Long projectId);
 
-    Optional<Label> findByNameAndProjectId(String name, Long projectId);
+    Optional<Label> findByNameAndProject_Id(String name, Long projectId);
 
-    List<Label> findByParentId(Long parentId);
+    List<Label> findByParent_Id(Long parentId);
 }
