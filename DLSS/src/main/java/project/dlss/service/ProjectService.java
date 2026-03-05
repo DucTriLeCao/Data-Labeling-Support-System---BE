@@ -1,39 +1,21 @@
 package project.dlss.service;
 
+import project.dlss.dto.CreateProjectRequest;
+import project.dlss.dto.ProjectDTO;
+import project.dlss.dto.ProjectOverviewDTO;
 
-import entity.User;
-import repository.ProjectRepository;
+import java.util.List;
 
 public interface ProjectService {
 
-    private ProjectRepository projectRepository = new ProjectRepository();
-    private ActivityLogService logService = new ActivityLogService();
+    ProjectDTO createProject(CreateProjectRequest request);
 
-    public void createProject(User user,
-                              String name,
-                              String description) {
-        if (!user.getRole().equals("admin")
-                && !user.getRole().equals("manager")) {
+    List<ProjectDTO> getAllProjects();
 
-            System.out.println("Permission denied!");
-            return;
-        }
+    ProjectDTO getProjectById(Long id);
 
-        long projectId = projectRepository.save(name, description);
+    ProjectOverviewDTO getProjectOverview(Long id);
 
-        if (projectId != -1) {
-            logService.log(
-                    user.getId(),
-                    "CREATE_PROJECT",
-                    "project",
-                    projectId
-            );
+    void deleteProject(Long id);
 
-            System.out.println("Project created successfully!");
-        }
-    }
-
-    public void overview(long projectId) {
-        projectRepository.overview(projectId);
-    }
 }
