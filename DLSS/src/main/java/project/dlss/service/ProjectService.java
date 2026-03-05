@@ -1,21 +1,54 @@
 package project.dlss.service;
 
-import project.dlss.dto.CreateProjectRequest;
-import project.dlss.dto.ProjectDTO;
-import project.dlss.dto.ProjectOverviewDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import project.dlss.entity.Project;
+import project.dlss.repository.ProjectRepository;
 
 import java.util.List;
 
-public interface ProjectService {
+@Service
+public class ProjectService {
 
-    ProjectDTO createProject(CreateProjectRequest request);
+    @Autowired
+    private ProjectRepository projectRepository;
 
-    List<ProjectDTO> getAllProjects();
+    // CREATE
+    public Project createProject(Project project) {
+        return projectRepository.save(project);
+    }
 
-    ProjectDTO getProjectById(Long id);
+    // READ ALL
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
+    }
 
-    ProjectOverviewDTO getProjectOverview(Long id);
+    // READ BY ID
+    public Project getProjectById(Long id) {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+    }
 
-    void deleteProject(Long id);
+    // UPDATE
+    public Project updateProject(Long id, Project newProject) {
 
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+
+        project.setName(newProject.getName());
+        project.setDescription(newProject.getDescription());
+        project.setStatus(newProject.getStatus());
+
+        return projectRepository.save(project);
+    }
+
+    // DELETE
+    public void deleteProject(Long id) {
+
+        if (!projectRepository.existsById(id)) {
+            throw new RuntimeException("Project not found");
+        }
+
+        projectRepository.deleteById(id);
+    }
 }

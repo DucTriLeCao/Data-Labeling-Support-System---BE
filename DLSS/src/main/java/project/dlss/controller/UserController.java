@@ -2,8 +2,8 @@ package project.dlss.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.dlss.dto.CreateUserRequest;
-import project.dlss.dto.UserDTO;
+import project.dlss.dto.UserRequestDTO;
+import project.dlss.dto.UserResponseDTO;
 import project.dlss.service.UserService;
 
 import java.util.List;
@@ -16,17 +16,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public UserDTO createUser(@RequestBody CreateUserRequest request) {
-        return userService.createUser(request);
+    public UserResponseDTO createUser(@RequestBody UserRequestDTO dto) {
+        return userService.createUser(dto);
     }
 
     @GetMapping
-    public List<UserDTO> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUser(@PathVariable Long id) {
+    public UserResponseDTO getUser(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -34,4 +34,5 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
 }

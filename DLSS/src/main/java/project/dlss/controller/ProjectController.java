@@ -1,43 +1,41 @@
 package project.dlss.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import project.dlss.dto.CreateProjectRequest;
-import project.dlss.dto.ProjectDTO;
-import project.dlss.dto.ProjectOverviewDTO;
+import project.dlss.entity.Project;
 import project.dlss.service.ProjectService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
-@RequiredArgsConstructor
+@RequestMapping("/api/projects")
 public class ProjectController {
 
-    private final ProjectService projectService;
+    @Autowired
+    private ProjectService projectService;
 
     @PostMapping
-    public ProjectDTO createProject(@RequestBody CreateProjectRequest request) {
-        return projectService.createProject(request);
+    public Project create(@RequestBody Project project){
+        return projectService.createProject(project);
     }
 
     @GetMapping
-    public List<ProjectDTO> getAllProjects() {
+    public List<Project> getAll(){
         return projectService.getAllProjects();
     }
 
     @GetMapping("/{id}")
-    public ProjectDTO getProject(@PathVariable Long id) {
+    public Project getById(@PathVariable Long id){
         return projectService.getProjectById(id);
     }
 
-    @GetMapping("/{id}/overview")
-    public ProjectOverviewDTO getOverview(@PathVariable Long id) {
-        return projectService.getProjectOverview(id);
+    @PutMapping("/{id}")
+    public Project update(@PathVariable Long id, @RequestBody Project project){
+        return projectService.updateProject(id, project);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProject(@PathVariable Long id) {
+    public void delete(@PathVariable Long id){
         projectService.deleteProject(id);
     }
 }
